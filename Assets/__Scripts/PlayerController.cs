@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioClip _deathSound;
 
     private int _score = 0;
+    [SerializeField] private int _highScore = 0;
 
     private void Awake()
     {
@@ -38,6 +39,11 @@ public class PlayerController : MonoBehaviour
         _playerRb = GetComponent<Rigidbody2D>();
         _animator = GetComponentInChildren<Animator>();
         _audioSource = GetComponent<AudioSource>();
+
+        if (PlayerPrefs.HasKey("HighScore"))
+        {
+            _highScore = PlayerPrefs.GetInt("HighScore");
+        }
     }
 
     private void Update()
@@ -98,6 +104,7 @@ public class PlayerController : MonoBehaviour
 
             _score += 1;
             UpdateScore();
+            UpdateHighScore();
         }
         else if (collision.CompareTag("Collectable"))
         {
@@ -109,11 +116,21 @@ public class PlayerController : MonoBehaviour
 
             _score += 5;
             UpdateScore();
+            UpdateHighScore();
         }
     }
 
     private void UpdateScore()
     {
         _scoreText.SetText($"Score: {_score}");
+    }
+
+    private void UpdateHighScore()
+    {
+        if (_score > _highScore)
+        {
+            _highScore = _score;
+            PlayerPrefs.SetInt("HighScore", _highScore);
+        }
     }
 }

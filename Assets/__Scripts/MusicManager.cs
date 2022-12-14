@@ -8,7 +8,8 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private Toggle _toggleMusic;
 
     private AudioSource[] _audioSources;
-    private float _volume;
+    private float _volume = 0.3f;
+    private float _previousVolume = 0.3f;
 
     private void Start()
     {
@@ -21,6 +22,7 @@ public class MusicManager : MonoBehaviour
     public void SliderMusic()
     {
         _volume = _sliderVolumeMusic.value;
+
         Save();
         ValueMusic();
     }
@@ -33,7 +35,7 @@ public class MusicManager : MonoBehaviour
         }
         else
         {
-            _volume = 1;
+            _volume = _previousVolume;
         }
 
         Save();
@@ -54,6 +56,7 @@ public class MusicManager : MonoBehaviour
     private void Save()
     {
         PlayerPrefs.SetFloat("volume", _volume);
+        _previousVolume = _volume;
     }
 
     private void Load()
