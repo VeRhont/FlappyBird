@@ -9,7 +9,6 @@ public class MusicManager : MonoBehaviour
 
     private AudioSource[] _audioSources;
     private float _volume = 0.3f;
-    private float _previousVolume = 0.3f;
 
     private void Start()
     {
@@ -31,11 +30,11 @@ public class MusicManager : MonoBehaviour
     {
         if (_toggleMusic.isOn)
         {
-            _volume = 0;
+            _volume = 1;
         }
         else
         {
-            _volume = _previousVolume;
+            _volume = 0;
         }
 
         Save();
@@ -50,13 +49,12 @@ public class MusicManager : MonoBehaviour
         }
 
         if (_sliderVolumeMusic != null) _sliderVolumeMusic.value = _volume;
-        if (_toggleMusic != null) _toggleMusic.isOn = _volume == 0f;
+        if (_toggleMusic != null) _toggleMusic.isOn = _volume != 0f;
     }
 
     private void Save()
     {
         PlayerPrefs.SetFloat("volume", _volume);
-        _previousVolume = _volume;
     }
 
     private void Load()
