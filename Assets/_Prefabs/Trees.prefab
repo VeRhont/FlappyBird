@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1636697215946339830}
   - component: {fileID: 1636697215946339831}
   - component: {fileID: 1636697215946339824}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: 'TreeUp '
-  m_TagString: Tree
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636697215946339826}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.242, y: 5.4808, z: 0}
+  m_LocalPosition: {x: 0.242, y: 5.21, z: 0}
   m_LocalScale: {x: 0.991606, y: 1.3434281, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -143,9 +143,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1636697216302317441}
   - component: {fileID: 208311597}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Trees
-  m_TagString: Tree
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _lifeTime: 15
+  _lifeTime: 20
 --- !u!1 &1636697216914885611
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,9 +194,9 @@ GameObject:
   - component: {fileID: 1636697216914885615}
   - component: {fileID: 1636697216914885608}
   - component: {fileID: 1636697216914885609}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: TreeDown
-  m_TagString: Tree
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -209,7 +209,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1636697216914885611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.242, y: -5.0761, z: 0}
+  m_LocalPosition: {x: 0.242, y: -4.75, z: 0}
   m_LocalScale: {x: 0.991606, y: 1.1210825, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -325,7 +325,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3898671893351266194}
   - component: {fileID: 6994197944919699362}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Pass
   m_TagString: Pass
   m_Icon: {fileID: 0}

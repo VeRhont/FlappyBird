@@ -12,9 +12,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _diveForce;
 
     [SerializeField] private ParticleSystem _deathParticles;
+    [SerializeField] private ParticleSystem _enemyDeathParticles;
     [SerializeField] private ParticleSystem _eggParticles;
 
     [SerializeField] private TextMeshProUGUI _scoreText;
+    private string _text;
 
     private AudioSource _audioSource;
     private Rigidbody2D _playerRb;
@@ -46,6 +48,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        _text = _scoreText.text;
+
+        UpdateScore();
+    }
+
     private void Update()
     {
         if (IsGameActive == false) return;
@@ -71,7 +80,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Tree"))
+        if (collision.gameObject.CompareTag("EnemyBird"))
+        {
+            var enemyBird = collision.gameObject;
+            enemyBird.GetComponentInChildren<Animator>().SetBool("IsDead", true);
+            enemyBird.GetComponent<Rigidbody2D>().gravityScale = 1f;
+            enemyBird.GetComponent<BoxCollider2D>().enabled = false;
+            enemyBird.GetComponent<MoveBackwards>().enabled = false;
+
+            Instantiate(_enemyDeathParticles, enemyBird.transform.position, _enemyDeathParticles.transform.rotation);
+
+            StartCoroutine(Die());
+        }
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
             StartCoroutine(Die());
         }
@@ -93,6 +114,11 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         Destroy(gameObject);
+
+        //
+        // YandexSDK.instance.ShowInterstitial();
+        //
+
         SceneManager.LoadScene("Game");
     }
 
@@ -122,7 +148,7 @@ public class PlayerController : MonoBehaviour
 
     private void UpdateScore()
     {
-        _scoreText.SetText($"Score: {_score}");
+        _scoreText.SetText($"{_text} {_score}");
     }
 
     private void UpdateHighScore()

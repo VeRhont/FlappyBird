@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameObject _tree;
+    [SerializeField] private GameObject[] _obstaclePatterns;
     [SerializeField] private GameObject _collectable;
 
-    [SerializeField] private Transform _treeAnchor;
-    [SerializeField] private float _spawnPoint;
+    [SerializeField] private Transform _obstaclesAnchor;
+    [SerializeField] private Vector2 _spawnPoint;
 
     [SerializeField] private float _firstSpawn;
     [SerializeField] private float _timeBetweenSpawn;
@@ -16,33 +16,44 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Invoke("SpawnTree", _firstSpawn);
+        Invoke("SpawnRandomObstacle", _firstSpawn);
+        Invoke("SpawnCollectable", _firstSpawn);
     }
 
     private void Update()
     {
         if (_timeBetweenSpawn > _minTimeBetweenSpawn)
         {
-            _timeBetweenSpawn -= (Time.deltaTime / 130f);
+            _timeBetweenSpawn -= (Time.deltaTime / 30f);
         }
     }
 
-    private void SpawnTree()
+    private void SpawnRandomObstacle()
     {
-        if (Random.value < _spawnCollectableChance) SpawnCollectable();
+        var randomIndex = Random.Range(0, _obstaclePatterns.Length);
 
-        var y = Random.Range(-2.5f, 2.5f);
-        var position = new Vector2(_spawnPoint, y);
+        var obstacle = Instantiate(_obstaclePatterns[randomIndex], _spawnPoint, Quaternion.identity);
+        obstacle.transform.parent = _obstaclesAnchor;
 
-        var tree = Instantiate(_tree, position, Quaternion.identity);
-        tree.transform.parent = _treeAnchor;
+        foreach (Transform obstacleParent in _obstaclesAnchor)
+        {
+            if (obstacleParent.childCount == 0)
+            {
+                Destroy(obstacleParent.gameObject);
+            }
+        }
 
-        Invoke("SpawnTree", _timeBetweenSpawn);
+        Invoke("SpawnRandomObstacle", _timeBetweenSpawn);
     }
 
     private void SpawnCollectable()
     {
-        var position = new Vector2(_spawnPoint + 5f, Random.Range(-4f, 4f));
-        Instantiate(_collectable, position, Quaternion.identity);
+        if (Random.value <= _spawnCollectableChance)
+        {
+            var position = new Vector2(_spawnPoint.x + Random.Range(-3f, 3f), Random.Range(-4f, 4f));
+            Instantiate(_collectable, position, Quaternion.identity);
+        }
+
+        Invoke("SpawnCollectable", _timeBetweenSpawn);
     }
 }

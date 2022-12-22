@@ -7,12 +7,12 @@ public class MoveBackwards : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, _lifeTime);
+        Destroy(gameObject, _lifeTime);     
     }
 
     private void Update()
     {
-        if (PlayerController.Instance.IsGameActive == false) return;
+        if (!gameObject.CompareTag("EnemyBird") && PlayerController.Instance.IsGameActive == false) return;
 
         transform.Translate(-1 * _speed * Time.deltaTime, 0, 0);
     }

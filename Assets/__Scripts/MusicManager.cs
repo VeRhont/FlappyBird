@@ -8,7 +8,7 @@ public class MusicManager : MonoBehaviour
     [SerializeField] private Toggle _toggleMusic;
 
     private AudioSource[] _audioSources;
-    private float _volume = 0.3f;
+    private float _volume = 0.5f;
 
     private void Start()
     {
@@ -59,6 +59,6 @@ public class MusicManager : MonoBehaviour
 
     private void Load()
     {
-        _volume = PlayerPrefs.GetFloat("volume");
+        _volume = PlayerPrefs.GetFloat("volume", 0.3f);
     }
 }
